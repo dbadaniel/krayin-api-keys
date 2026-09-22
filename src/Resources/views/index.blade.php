@@ -38,7 +38,7 @@
                 </div>
 
                 <!-- Info description banner -->
-                <div class="rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800 dark:border-blue-900/50 dark:bg-blue-950/30 dark:text-blue-300">
+                <div class="rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                     <p>@lang('api_key::app.admin.api-keys.index.description')</p>
                 </div>
 
@@ -68,7 +68,7 @@
                             <!-- Modal Content -->
                             <x-slot:content>
                                 <x-admin::form.control-group>
-                                    <x-admin::form.control-group.label class="required">
+                                    <x-admin::form.control-group.label class="required text-gray-700 dark:text-gray-200">
                                         @lang('api_key::app.admin.api-keys.create.name')
                                     </x-admin::form.control-group.label>
 
@@ -111,8 +111,8 @@
                 <!-- Modal 2: Token Display with Copy Button -->
                 <x-admin::modal ref="tokenDisplayModal">
                     <x-slot:header>
-                        <p class="text-lg font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
-                            <span>🔑</span>
+                        <p class="flex items-center gap-2 text-lg font-bold text-gray-800 dark:text-white">
+                            <span class="text-xl">🔑</span>
                             <span>@lang('api_key::app.admin.api-keys.created.title')</span>
                         </p>
                     </x-slot>
@@ -120,13 +120,16 @@
                     <x-slot:content>
                         <div class="flex flex-col gap-4 py-2">
                             <!-- Security Warning Alert -->
-                            <div class="rounded-lg border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/40 dark:text-amber-300">
-                                <strong>⚠️ @lang('api_key::app.admin.api-keys.created.warning')</strong>
+                            <div class="rounded-lg border p-3 text-xs" style="background-color: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.4); color: #fbbf24;">
+                                <strong class="flex items-center gap-1.5 text-xs font-semibold" style="color: #fcd34d;">
+                                    <span>⚠️</span>
+                                    <span>@lang('api_key::app.admin.api-keys.created.warning')</span>
+                                </strong>
                             </div>
 
                             <!-- Token Copy Box -->
                             <div class="flex flex-col gap-1.5">
-                                <label class="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                                <label class="text-xs font-semibold text-gray-700 dark:text-gray-200">
                                     Token:
                                 </label>
                                 <div class="flex items-center gap-2">
@@ -134,7 +137,8 @@
                                         type="text"
                                         :value="plainTextToken"
                                         readonly
-                                        class="w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 font-mono text-sm text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 select-all"
+                                        class="w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 font-mono text-sm select-all dark:border-gray-700"
+                                        style="background-color: #090d16; color: #34d399; border: 1px solid #374151;"
                                         @click="$event.target.select()"
                                     />
 
@@ -150,10 +154,10 @@
                             </div>
 
                             <!-- How to use -->
-                            <div class="mt-2 rounded-lg border border-gray-200 bg-gray-50 p-3 text-xs text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 flex flex-col gap-1.5">
-                                <span class="font-semibold">@lang('api_key::app.admin.api-keys.created.how-to-use')</span>
-                                <p class="text-gray-500 dark:text-gray-400">@lang('api_key::app.admin.api-keys.created.how-to-use-desc')</p>
-                                <pre class="overflow-x-auto rounded bg-gray-900 p-2 text-[11px] font-mono text-emerald-400 dark:bg-black">Authorization: Bearer @{{ plainTextToken }}</pre>
+                            <div class="mt-2 flex flex-col gap-1.5 rounded-lg border border-gray-200 bg-gray-50 p-3 text-xs text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                                <span class="font-semibold text-gray-800 dark:text-white">@lang('api_key::app.admin.api-keys.created.how-to-use')</span>
+                                <p class="text-gray-600 dark:text-gray-400">@lang('api_key::app.admin.api-keys.created.how-to-use-desc')</p>
+                                <pre class="overflow-x-auto rounded p-2.5 text-[12px] font-mono" style="background-color: #030712; border: 1px solid #1f2937; color: #10b981;">Authorization: Bearer @{{ plainTextToken }}</pre>
                             </div>
                         </div>
                     </x-slot>
