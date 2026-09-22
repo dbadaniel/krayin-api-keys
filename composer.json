@@ -1,0 +1,29 @@
+{
+    "name": "expertsa/krayin-api-keys",
+    "description": "API Keys and Personal Access Token Management Plugin for Krayin CRM",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ExpertSA",
+            "email": "contato@expertsa.com.br"
+        }
+    ],
+    "require": {
+        "php": "^8.2|^8.3",
+        "laravel/sanctum": "^3.0|^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\ApiKey\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\ApiKey\\Providers\\ApiKeyServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}
