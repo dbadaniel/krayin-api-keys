@@ -125,30 +125,40 @@
                                             @lang('api_key::app.admin.api-keys.create.permissions')
                                         </label>
 
-                                        <!-- Native High-Contrast Radio Options -->
-                                        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 py-1">
-                                            <label class="inline-flex cursor-pointer items-center gap-2">
+                                        <!-- Native High-Contrast Radio Options with Clear Subtitles -->
+                                        <div class="flex flex-col gap-3 py-1">
+                                            <label class="inline-flex cursor-pointer items-start gap-2.5">
                                                 <input
                                                     type="radio"
                                                     value="all"
                                                     v-model="permissionType"
-                                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
+                                                    class="mt-0.5 h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm font-semibold text-gray-800 dark:text-white">
-                                                    @lang('api_key::app.admin.api-keys.create.all-permissions')
-                                                </span>
+                                                <div class="flex flex-col">
+                                                    <span class="text-sm font-semibold text-gray-800 dark:text-white">
+                                                        @lang('api_key::app.admin.api-keys.create.all-permissions')
+                                                    </span>
+                                                    <span class="text-xs text-gray-500 dark:text-gray-400">
+                                                        @lang('api_key::app.admin.api-keys.create.all-permissions-help')
+                                                    </span>
+                                                </div>
                                             </label>
 
-                                            <label class="inline-flex cursor-pointer items-center gap-2">
+                                            <label class="inline-flex cursor-pointer items-start gap-2.5">
                                                 <input
                                                     type="radio"
                                                     value="custom"
                                                     v-model="permissionType"
-                                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
+                                                    class="mt-0.5 h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm font-semibold text-gray-800 dark:text-white">
-                                                    @lang('api_key::app.admin.api-keys.create.custom-permissions')
-                                                </span>
+                                                <div class="flex flex-col">
+                                                    <span class="text-sm font-semibold text-gray-800 dark:text-white">
+                                                        @lang('api_key::app.admin.api-keys.create.custom-permissions')
+                                                    </span>
+                                                    <span class="text-xs text-gray-500 dark:text-gray-400">
+                                                        @lang('api_key::app.admin.api-keys.create.custom-permissions-help')
+                                                    </span>
+                                                </div>
                                             </label>
                                         </div>
 
