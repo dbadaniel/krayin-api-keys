@@ -21,9 +21,11 @@ class ApiKeyDataGrid extends DataGrid
             ->addSelect(
                 'personal_access_tokens.id',
                 'personal_access_tokens.name',
+                'personal_access_tokens.abilities',
                 'personal_access_tokens.last_used_at',
                 'personal_access_tokens.created_at',
-                'users.name as user_name'
+                'users.name as user_name',
+                'users.email as user_email'
             );
 
         $this->addFilter('id', 'personal_access_tokens.id');
@@ -67,6 +69,41 @@ class ApiKeyDataGrid extends DataGrid
             'searchable' => true,
             'filterable' => true,
             'sortable'   => true,
+            'closure'    => fn ($row) => $row->user_name
+                ? e($row->user_name) . ($row->user_email ? ' <span class="text-xs text-gray-500">(' . e($row->user_email) . ')</span>' : '')
+                : '-',
+        ]);
+
+        $this->addColumn([
+            'index'      => 'abilities',
+            'label'      => trans('api_key::app.admin.datagrid.permissions'),
+            'type'       => 'string',
+            'searchable' => false,
+            'filterable' => false,
+            'sortable'   => false,
+            'closure'    => function ($row) {
+                $raw = $row->abilities;
+                $abilities = is_string($raw) ? json_decode($raw, true) : (array) $raw;
+
+                if (empty($abilities) || in_array('*', $abilities)) {
+                    return '<span class="badge badge-round badge-success">' . trans('api_key::app.admin.datagrid.all') . '</span>';
+                }
+
+                // Extract unique modules
+                $modules = [];
+                foreach ($abilities as $ability) {
+                    $parts = explode(':', $ability);
+                    $modules[] = ucfirst($parts[0]);
+                }
+                $uniqueModules = array_values(array_unique($modules));
+
+                $label = implode(', ', array_slice($uniqueModules, 0, 3));
+                if (count($uniqueModules) > 3) {
+                    $label .= ' +' . (count($uniqueModules) - 3);
+                }
+
+                return '<span class="badge badge-round badge-primary" title="' . e(implode(', ', $abilities)) . '">' . e($label) . '</span>';
+            },
         ]);
 
         $this->addColumn([

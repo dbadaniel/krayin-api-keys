@@ -2,7 +2,9 @@
 
 namespace Webkul\ApiKey\Providers;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Webkul\ApiKey\Http\Middleware\ApiKeyAbilityMiddleware;
 
 class ApiKeyServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,8 @@ class ApiKeyServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'api_key');
 
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'api_key');
+
+        $this->registerMiddleware();
     }
 
     /**
@@ -32,5 +36,17 @@ class ApiKeyServiceProvider extends ServiceProvider
             dirname(__DIR__).'/Config/acl.php',
             'acl'
         );
+    }
+
+    /**
+     * Register API middleware.
+     */
+    protected function registerMiddleware(): void
+    {
+        /** @var Router $router */
+        $router = $this->app['router'];
+
+        $router->aliasMiddleware('api_key.ability', ApiKeyAbilityMiddleware::class);
+        $router->pushMiddlewareToGroup('api', ApiKeyAbilityMiddleware::class);
     }
 }

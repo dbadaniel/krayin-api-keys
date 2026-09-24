@@ -1,6 +1,7 @@
 {
     "name": "expertsa/krayin-api-keys",
     "description": "API Keys and Personal Access Token Management Plugin for Krayin CRM",
+    "version": "1.1.0",
     "type": "library",
     "license": "MIT",
     "authors": [
