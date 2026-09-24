@@ -69,12 +69,12 @@
                                 </p>
                             </x-slot>
 
-                            <!-- Modal Content (Scrollable with max height to fit on screen) -->
+                            <!-- Modal Content (Clean, Compact, No Window Overflow) -->
                             <x-slot:content>
-                                <div class="flex flex-col gap-4 py-2 max-h-[calc(78vh-110px)] overflow-y-auto pr-1">
+                                <div class="flex flex-col gap-4 py-2">
                                     <!-- 1. Key Name -->
                                     <x-admin::form.control-group class="!mb-0">
-                                        <x-admin::form.control-group.label class="required text-gray-800 dark:text-gray-100 font-semibold">
+                                        <x-admin::form.control-group.label class="required text-gray-800 dark:text-white font-semibold">
                                             @lang('api_key::app.admin.api-keys.create.name')
                                         </x-admin::form.control-group.label>
 
@@ -93,7 +93,7 @@
 
                                     <!-- 2. Associated User / Login -->
                                     <div v-if="canManageAll && users.length > 1" class="flex flex-col gap-1.5">
-                                        <label for="user_id" class="text-xs font-semibold text-gray-800 dark:text-gray-100">
+                                        <label for="user_id" class="text-xs font-semibold text-gray-800 dark:text-white">
                                             @lang('api_key::app.admin.api-keys.create.user')
                                         </label>
 
@@ -101,14 +101,14 @@
                                             id="user_id"
                                             name="user_id"
                                             v-model="selectedUserId"
-                                            class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 shadow-xs transition focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                                            class="custom-select w-full rounded border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-white"
                                         >
                                             <option
                                                 v-for="user in users"
                                                 :key="user.id"
                                                 :value="user.id"
-                                                class="bg-white py-1 text-gray-900 dark:bg-gray-800 dark:text-white"
-                                                style="background-color: #1f2937; color: #f9fafb;"
+                                                class="bg-white py-1 text-gray-900 dark:bg-gray-900 dark:text-white"
+                                                style="background-color: #111827; color: #ffffff;"
                                             >
                                                 @{{ user.name }} (@{{ user.email }})
                                             </option>
@@ -120,152 +120,149 @@
                                     </div>
 
                                     <!-- 3. Permissions Section -->
-                                    <div class="flex flex-col gap-2 pt-1">
-                                        <label class="text-xs font-semibold text-gray-800 dark:text-gray-100">
+                                    <div class="flex flex-col gap-2.5">
+                                        <label class="text-xs font-semibold text-gray-800 dark:text-white">
                                             @lang('api_key::app.admin.api-keys.create.permissions')
                                         </label>
 
-                                        <!-- Modern Card Selectors for Permissions -->
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                                            <label
-                                                class="flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition select-none"
-                                                :class="permissionType === 'all'
-                                                    ? 'border-blue-500 bg-blue-50/70 text-blue-900 dark:border-blue-500 dark:bg-blue-950/40 dark:text-blue-200 shadow-xs'
-                                                    : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300'"
-                                            >
+                                        <!-- Native High-Contrast Radio Options -->
+                                        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 py-1">
+                                            <label class="inline-flex cursor-pointer items-center gap-2">
                                                 <input
                                                     type="radio"
                                                     value="all"
                                                     v-model="permissionType"
-                                                    class="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <div class="flex flex-col">
-                                                    <span class="text-xs font-bold">🌐 @lang('api_key::app.admin.api-keys.create.all-permissions')</span>
-                                                    <span class="text-[11px] opacity-75">Acesso irrestrito a todos os endpoints</span>
-                                                </div>
+                                                <span class="text-sm font-semibold text-gray-800 dark:text-white">
+                                                    @lang('api_key::app.admin.api-keys.create.all-permissions')
+                                                </span>
                                             </label>
 
-                                            <label
-                                                class="flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition select-none"
-                                                :class="permissionType === 'custom'
-                                                    ? 'border-blue-500 bg-blue-50/70 text-blue-900 dark:border-blue-500 dark:bg-blue-950/40 dark:text-blue-200 shadow-xs'
-                                                    : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300'"
-                                            >
+                                            <label class="inline-flex cursor-pointer items-center gap-2">
                                                 <input
                                                     type="radio"
                                                     value="custom"
                                                     v-model="permissionType"
-                                                    class="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <div class="flex flex-col">
-                                                    <span class="text-xs font-bold">🔒 @lang('api_key::app.admin.api-keys.create.custom-permissions')</span>
-                                                    <span class="text-[11px] opacity-75">Definir escopos específicos por módulo</span>
-                                                </div>
+                                                <span class="text-sm font-semibold text-gray-800 dark:text-white">
+                                                    @lang('api_key::app.admin.api-keys.create.custom-permissions')
+                                                </span>
                                             </label>
                                         </div>
 
-                                        <!-- Custom Permissions Grid -->
+                                        <!-- Custom Permissions Table (Compact & Scrollable, no modal blowout) -->
                                         <div
                                             v-show="permissionType === 'custom'"
-                                            class="mt-1 flex flex-col gap-2.5 rounded-lg border border-gray-200 bg-gray-50/80 p-3 dark:border-gray-800 dark:bg-gray-900/60"
+                                            class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-gray-50 p-2.5 dark:border-gray-800 dark:bg-gray-900"
                                         >
-                                            <!-- Quick selection bar -->
-                                            <div class="flex items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-800">
-                                                <div class="flex items-center gap-2">
-                                                    <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">
-                                                        @{{ selectedAbilities.length }} escopos ativos
-                                                    </span>
-                                                </div>
+                                            <!-- Quick selection actions -->
+                                            <div class="flex items-center justify-between px-1 pb-1">
+                                                <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/60 px-2.5 py-0.5 text-xs font-semibold text-blue-800 dark:text-blue-200">
+                                                    @{{ selectedAbilities.length }} escopos ativos
+                                                </span>
 
                                                 <div class="flex items-center gap-3 text-xs">
                                                     <button
                                                         type="button"
-                                                        class="cursor-pointer font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                                                        class="cursor-pointer font-semibold text-blue-600 hover:underline dark:text-blue-400"
                                                         @click="selectAllAbilities"
                                                     >
-                                                        ✓ @lang('api_key::app.admin.api-keys.create.select-all')
+                                                        @lang('api_key::app.admin.api-keys.create.select-all')
                                                     </button>
                                                     <span class="text-gray-300 dark:text-gray-700">|</span>
                                                     <button
                                                         type="button"
-                                                        class="cursor-pointer font-medium text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
+                                                        class="cursor-pointer font-semibold text-red-500 hover:underline dark:text-red-400"
                                                         @click="deselectAllAbilities"
                                                     >
-                                                        ✕ @lang('api_key::app.admin.api-keys.create.deselect-all')
+                                                        @lang('api_key::app.admin.api-keys.create.deselect-all')
                                                     </button>
                                                 </div>
                                             </div>
 
-                                            <!-- Modules Grid (Scrollable inside box so it never breaks screen) -->
-                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[250px] overflow-y-auto pr-1">
-                                                <div
-                                                    v-for="mod in availableModules"
-                                                    :key="mod.key"
-                                                    class="flex flex-col gap-1.5 rounded-md border border-gray-200 bg-white p-2.5 transition dark:border-gray-700/80 dark:bg-gray-800/90"
-                                                >
-                                                    <div class="flex items-center justify-between border-b border-gray-100 pb-1.5 dark:border-gray-700/60">
-                                                        <span class="text-xs font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
-                                                            <span>@{{ mod.icon }}</span>
-                                                            <span>@{{ mod.name }}</span>
-                                                        </span>
-
-                                                        <button
-                                                            type="button"
-                                                            class="text-[11px] font-semibold transition hover:underline"
-                                                            :class="isModuleFull(mod.key)
-                                                                ? 'text-red-500 dark:text-red-400'
-                                                                : 'text-blue-600 dark:text-blue-400'"
-                                                            @click="toggleModule(mod.key)"
+                                            <!-- Compact Table Container -->
+                                            <div class="max-h-[220px] overflow-y-auto rounded border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
+                                                <table class="w-full text-left text-xs">
+                                                    <thead class="sticky top-0 bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200 border-b border-gray-200 dark:border-gray-700">
+                                                        <tr>
+                                                            <th class="px-3 py-2 font-semibold">Módulo</th>
+                                                            <th class="px-3 py-2 text-center font-semibold">Leitura (GET)</th>
+                                                            <th class="px-3 py-2 text-center font-semibold">Escrita (POST/PUT/DEL)</th>
+                                                            <th class="px-3 py-2 text-right font-semibold">Ação</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                                                        <tr
+                                                            v-for="mod in availableModules"
+                                                            :key="mod.key"
+                                                            class="hover:bg-gray-50 dark:hover:bg-gray-800/60 transition"
                                                         >
-                                                            @{{ isModuleFull(mod.key) ? 'Desmarcar' : 'Ambos' }}
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="flex items-center gap-3 pt-0.5 text-xs text-gray-700 dark:text-gray-200">
-                                                        <label class="inline-flex cursor-pointer items-center gap-1.5 hover:text-blue-600 dark:hover:text-blue-400">
-                                                            <input
-                                                                type="checkbox"
-                                                                :value="mod.key + ':read'"
-                                                                v-model="selectedAbilities"
-                                                                class="h-3.5 w-3.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                                            />
-                                                            <span>Leitura (GET)</span>
-                                                        </label>
-
-                                                        <label class="inline-flex cursor-pointer items-center gap-1.5 hover:text-blue-600 dark:hover:text-blue-400">
-                                                            <input
-                                                                type="checkbox"
-                                                                :value="mod.key + ':write'"
-                                                                v-model="selectedAbilities"
-                                                                class="h-3.5 w-3.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                                            />
-                                                            <span>Escrita (POST/PUT/DEL)</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
+                                                            <td class="px-3 py-2 font-medium text-gray-800 dark:text-white">
+                                                                <span class="mr-1.5">@{{ mod.icon }}</span>
+                                                                <span>@{{ mod.name }}</span>
+                                                            </td>
+                                                            <td class="px-3 py-2 text-center">
+                                                                <label class="inline-flex cursor-pointer items-center justify-center">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        :value="mod.key + ':read'"
+                                                                        v-model="selectedAbilities"
+                                                                        class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                                                    />
+                                                                </label>
+                                                            </td>
+                                                            <td class="px-3 py-2 text-center">
+                                                                <label class="inline-flex cursor-pointer items-center justify-center">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        :value="mod.key + ':write'"
+                                                                        v-model="selectedAbilities"
+                                                                        class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                                                    />
+                                                                </label>
+                                                            </td>
+                                                            <td class="px-3 py-2 text-right">
+                                                                <button
+                                                                    type="button"
+                                                                    class="font-semibold text-xs hover:underline"
+                                                                    :class="isModuleFull(mod.key)
+                                                                        ? 'text-red-500 dark:text-red-400'
+                                                                        : 'text-blue-600 dark:text-blue-400'"
+                                                                    @click="toggleModule(mod.key)"
+                                                                >
+                                                                    @{{ isModuleFull(mod.key) ? 'Limpar' : 'Ambos' }}
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </x-slot>
 
-                            <!-- Modal Footer -->
+                            <!-- Modal Footer: Explicit gap between buttons -->
                             <x-slot:footer>
-                                <button
-                                    type="button"
-                                    class="secondary-button"
-                                    @click="$refs.createModal.toggle()"
-                                >
-                                    @lang('api_key::app.admin.api-keys.create.cancel-btn')
-                                </button>
+                                <div class="flex items-center gap-3">
+                                    <button
+                                        type="button"
+                                        class="secondary-button"
+                                        @click="$refs.createModal.toggle()"
+                                    >
+                                        @lang('api_key::app.admin.api-keys.create.cancel-btn')
+                                    </button>
 
-                                <x-admin::button
-                                    button-type="submit"
-                                    class="primary-button"
-                                    :title="trans('api_key::app.admin.api-keys.create.save-btn')"
-                                    ::loading="isProcessing"
-                                    ::disabled="isProcessing"
-                                />
+                                    <x-admin::button
+                                        button-type="submit"
+                                        class="primary-button"
+                                        :title="trans('api_key::app.admin.api-keys.create.save-btn')"
+                                        ::loading="isProcessing"
+                                        ::disabled="isProcessing"
+                                    />
+                                </div>
                             </x-slot>
                         </x-admin::modal>
                     </form>
@@ -333,13 +330,15 @@
                     </x-slot>
 
                     <x-slot:footer>
-                        <button
-                            type="button"
-                            class="primary-button w-full justify-center"
-                            @click="closeTokenModal"
-                        >
-                            @lang('api_key::app.admin.api-keys.created.close-btn')
-                        </button>
+                        <div class="flex items-center justify-end w-full">
+                            <button
+                                type="button"
+                                class="primary-button w-full justify-center"
+                                @click="closeTokenModal"
+                            >
+                                @lang('api_key::app.admin.api-keys.created.close-btn')
+                            </button>
+                        </div>
                     </x-slot>
                 </x-admin::modal>
             </div>
